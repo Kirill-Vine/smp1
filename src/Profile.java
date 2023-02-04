@@ -1,4 +1,5 @@
-@author Michael Burton
+
+import java.util.Scanner;
 public class Profile implements Comparable<Profile> {
     private String lname;
     private String fname;
@@ -20,17 +21,29 @@ public class Profile implements Comparable<Profile> {
         }
         return false;
     }
-    @Override public int compareTo(Object o) {
+    @Override public int compareTo(Profile o) {
         if(o instanceof Profile) {
+            int output;
             Profile profile = (Profile)o;
-            if(this.lname.compareTo(profile.lname)) {
-                return 1;
-            } else if (this.fname.compareTo(profile.fname)) {
-                return 1;
-            } else if (this.dob.compareTo(profile.dob)) {
-                return 1;
+            output = this.lname.compareTo(profile.lname);
+            if(output == 0) {
+                output = this.fname.compareTo(profile.fname);
+                if(output == 0) {
+                    output = this.dob.compareTo(profile.dob);
+                }
             }
+            return output;
         }
-        return false;
+        return 0;
     }
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        String fname = sc.nextLine();
+        String lname = sc.nextLine();
+        String dobString = sc.nextLine();
+        Date dob = new Date(dobString);
+        Profile profile = new Profile(lname,fname,dob);
+        System.out.println(profile.toString());
+    }
+
 }
