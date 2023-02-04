@@ -1,12 +1,15 @@
-@author Michael Burton
+
+
 public class Profile implements Comparable<Profile> {
     private String lname;
     private String fname;
     private Date dob; //use the Date class described in (f)
+
+    
     public Profile(String l, String f, Date d) {
         this.lname = l;
         this.fname = f;
-        Date dob = d;
+        dob = d;
     }
     @Override public String toString() {
         return "" + lname + " " + fname + " " + dob.toString();
@@ -20,17 +23,20 @@ public class Profile implements Comparable<Profile> {
         }
         return false;
     }
-    @Override public int compareTo(Object o) {
+    @Override public int compareTo(Profile o) {
         if(o instanceof Profile) {
+            int output;
             Profile profile = (Profile)o;
-            if(this.lname.compareTo(profile.lname)) {
-                return 1;
-            } else if (this.fname.compareTo(profile.fname)) {
-                return 1;
-            } else if (this.dob.compareTo(profile.dob)) {
-                return 1;
+            output = this.lname.compareTo(profile.lname);
+            if(output == 0) {
+                output = this.fname.compareTo(profile.fname);
+                if(output == 0) {
+                    output = this.dob.compareTo(profile.dob);
+                }
             }
+            return output;
         }
-        return false;
+        return 0;
     }
+
 }

@@ -7,11 +7,23 @@ public class Date implements Comparable<Date> {
         //bruh idk 0_0
 
     } //create an object with today’s date (see Calendar class)
+
     public Date(String date) {
-        String[] dateArray = date.split("/",0);
-        this.month = Integer.parseInt(dateArray[0]);
-        this.day = Integer.parseInt(dateArray[1]);
-        this.year = Integer.parseInt(dateArray[2]);
+        String[] dateArray = date.split("/", 0);
+        try {
+            this.month = Integer.parseInt(dateArray[0]);
+            this.day = Integer.parseInt(dateArray[1]);
+            this.year = Integer.parseInt(dateArray[2]);
+        } catch (NumberFormatException nfe) {
+            System.out.println("improper date");
+            return;
+        }
+    }
+
+    public Date (Date d) {
+        this.month = d.month;
+        this.day = d.day;
+        this.year = d.year;
     }
     //take mm/dd/yyyy and create a Date object
     public boolean isValid() {
@@ -37,9 +49,10 @@ public class Date implements Comparable<Date> {
         final int LEAP_YEAR = 29;
         //idk how to get this :,|
         //MUST CHANGE =================================================
-        final int CURRENT_YEAR = 0;
+        final int CURRENT_YEAR = 2222;
 
         if(this.month > MONTHS_PER_YEAR || this.year > CURRENT_YEAR || this.month < JANUARY){
+            System.out.println("improper date");
             return false;
         }
         switch(this.month){
@@ -50,7 +63,8 @@ public class Date implements Comparable<Date> {
             case AUGUST:
             case OCTOBER:
             case DECEMBER:
-                if(this.day != LONG_MONTHS) {
+                if(this.day > LONG_MONTHS) {
+                    System.out.println("long month");
                     return false;
                 }
                 break;
@@ -58,7 +72,8 @@ public class Date implements Comparable<Date> {
             case JUNE:
             case SEPTEMBER:
             case NOVEMBER:
-                if(this.day != SHORT_MONTHS){
+                if(this.day > SHORT_MONTHS){
+                    System.out.println("improper date");
                     return false;
                 }
                 break;
@@ -66,17 +81,20 @@ public class Date implements Comparable<Date> {
                 if (this.year % QUADRENNIAL ==0 ) {
                     if(this.year % CENTENNIAL == 0) {
                         if(this.year %QUATERCENTENNIAL == 0) {
-                            if(this.day != LEAP_YEAR) {
+                            if(this.day > LEAP_YEAR) {
+                                System.out.println("improper date");
                                 return false;
                             }
                         }
                     } else {
                         if(this.day != LEAP_YEAR) {
+                            System.out.println("improper date");
                             return false;
                         }
                     }
                 }
                 if(this.day != WEIRD_ONE) {
+                    System.out.println("improper date");
                     return false;
                 }
         }
@@ -85,7 +103,8 @@ public class Date implements Comparable<Date> {
 
 
     @Override public String toString() {
-        return month + "/" + day + "/" + year;
+
+        return this.month + "/" + this.day + "/" + this.year;
     }
     @Override public boolean equals(Object o) {
         if(o instanceof Date) {
@@ -111,7 +130,5 @@ public class Date implements Comparable<Date> {
             }
         }
         return -1;
-    }
-    public static void main(String args[]) {
     }
 }
