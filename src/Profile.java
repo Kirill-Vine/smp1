@@ -1,11 +1,11 @@
+package project1;
 
 
+import java.util.Scanner;
 public class Profile implements Comparable<Profile> {
     private String lname;
     private String fname;
     private Date dob; //use the Date class described in (f)
-
-    
     public Profile(String l, String f, Date d) {
         this.lname = l;
         this.fname = f;
@@ -37,6 +37,15 @@ public class Profile implements Comparable<Profile> {
             return output;
         }
         return 0;
+    }
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        String fname = sc.nextLine();
+        String lname = sc.nextLine();
+        String dobString = sc.nextLine();
+        Date dob = new Date(dobString);
+        Profile profile = new Profile(lname,fname,dob);
+        System.out.println(profile.toString());
     }
 
 }
