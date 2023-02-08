@@ -1,3 +1,5 @@
+package project1;
+
 
 import java.util.Scanner;
 public class Profile implements Comparable<Profile> {
@@ -7,7 +9,7 @@ public class Profile implements Comparable<Profile> {
     public Profile(String l, String f, Date d) {
         this.lname = l;
         this.fname = f;
-        Date dob = d;
+        dob = d;
     }
     @Override public String toString() {
         return "" + lname + " " + fname + " " + dob.toString();
