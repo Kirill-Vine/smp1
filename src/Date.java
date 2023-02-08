@@ -1,3 +1,5 @@
+package project1;
+
 import java.util.Calendar;
 public class Date implements Comparable<Date> {
     private int year;
@@ -120,9 +122,5 @@ public class Date implements Comparable<Date> {
             }
         }
         return -1;
-    }
-    public static void main(String [] args){
-        Date date = new Date("2/29/2023");
-        System.out.println(date.isValid());
     }
 }
