@@ -38,7 +38,7 @@ public class RosterManager {
                                 tempMajor = Major.BAIT;
                                 break;
                             default:
-                                System.out.println("unavailable major");
+                                System.out.println("Major does not exist");
                                 continue;
 
                         }
@@ -61,7 +61,11 @@ public class RosterManager {
 
                         Student student = new Student(new Profile(inputStringList[2], inputStringList[1], dob),
                                 tempMajor, credits);
-                        roster.add(student);
+                        if (!roster.contains(student)) {
+                            roster.add(student);
+                        } else {
+                            System.out.println("Roster already contains student");
+                        }
                     } else {
                         System.out.println("improper command");
                         continue;

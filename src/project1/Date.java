@@ -56,9 +56,10 @@ public class Date implements Comparable<Date> {
         final int SHORT_MONTHS = 30;
         final int NON_LEAP_YEAR = 28;
         final int LEAP_YEAR = 29;
-        final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);;
+        final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
+        final int MIN_AGE = 16;
 
-        if(this.month > MONTHS_PER_YEAR || this.year > CURRENT_YEAR || this.month < JANUARY){
+        if(this.month > MONTHS_PER_YEAR || this.year > CURRENT_YEAR || this.month < JANUARY || this.year > CURRENT_YEAR-MIN_AGE){
             return false;
         }
         switch(this.month){
