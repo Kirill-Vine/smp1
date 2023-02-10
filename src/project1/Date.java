@@ -17,7 +17,9 @@ public class Date implements Comparable<Date> {
             this.day = Integer.parseInt(dateArray[1]);
             this.year = Integer.parseInt(dateArray[2]);
         } catch (NumberFormatException nfe){
-            return;
+            this.year = -1;
+            this.month = -1;
+            this.day = -1;
         }
     }
     //take mm/dd/yyyy and create a Date object
