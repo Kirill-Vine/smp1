@@ -20,7 +20,7 @@ public enum Major {
 
     public static Major setMajor(String input) {
         Major output;
-        switch (input) {
+        switch (input.toUpperCase()) {
             case "CS":
                 output = Major.CS;
                 break;

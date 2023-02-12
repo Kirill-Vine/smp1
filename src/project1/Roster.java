@@ -5,13 +5,13 @@ public class Roster {
     private int size = 4;
 
     private void sortStudentProfiles() {
-        for (int i = 0; i < size-1; i++){
+        for (int i = 0; i < size - 1; i++) {
             int currentMinimum = i;
-            if(roster[i]==null){
+            if (roster[i] == null) {
                 continue;
             }
-            for (int j = i+1; j < size; j++) {
-                if(roster[j]==null){
+            for (int j = i + 1; j < size; j++) {
+                if (roster[j] == null) {
                     continue;
                 }
                 if (this.roster[j].compareTo(this.roster[currentMinimum]) > 0) {
@@ -22,6 +22,15 @@ public class Roster {
             this.roster[currentMinimum] = this.roster[i];
             this.roster[i] = temp;
         }
+    }
+
+    private boolean isEmpty() {
+        for (int i = 0; i < this.roster.length; i++) {
+            if (this.roster[i] != null) {
+                return false;
+            }
+        }
+        return true;
     }
     private int find(Student student) {
         if(contains(student)) {
@@ -71,13 +80,18 @@ public class Roster {
     } //add student to end of array
 
     public boolean remove(Student student) {
-        for(int i = 0; i < size; i++){
-            if(this.roster[i] != null && this.roster[i].equals(student)){
-                roster[i]=null;
-                return true;
+        if (!this.isEmpty()) {
+            for (int i = 0; i < size; i++) {
+                if (this.roster[i] != null && this.roster[i].equals(student)) {
+                    roster[i] = null;
+                    return true;
+                }
             }
+            return false;
+        } else {
+            System.out.println("Roster is empty!");
+            return false;
         }
-        return true;
     }//maintain the order after remove
 
     public boolean contains(Student student) {

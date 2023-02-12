@@ -7,8 +7,10 @@ public class RosterManager {
     final static int REMOVE_COMMAND_SIZE = 4;
     final static int PRINT_COMMAND_SIZE = 1;
     final static int CHANGE_MAJOR_COMMAND_SIZE = 4;
+    
     //creates a student class given a list of inputs
-    public Student setStudent(String[] inputStringList) {
+    public static Student setStudent(String[] inputStringList) {
+        Student output = null;
         if(inputStringList.length == ADD_COMMAND_SIZE) {
             Major tempMajor;
             int credits = 0;
@@ -31,12 +33,14 @@ public class RosterManager {
                 System.out.println("invalid Date of Birth");
                 return null;
             }
-            Student output = new Student(new Profile(inputStringList[2], inputStringList[1], dob),
-                    tempMajor, credits);
-        } else if(inputStringList == REMOVE_COMMAND_SIZE) {
+            output = new Student(new Profile(inputStringList[2], inputStringList[1], dob), tempMajor, credits);
+
+        } else if(inputStringList.length == REMOVE_COMMAND_SIZE) {
             Date dob = new Date(inputStringList[3]);
             Profile currentStudentProfile = new Profile(inputStringList[2], inputStringList[1], dob);
             output = new Student(currentStudentProfile);
+        } else {
+            System.out.println("improper command");
         }
         return output;
 
@@ -54,41 +58,15 @@ public class RosterManager {
             //list of potential inputs
             switch (inputStringList[0]) {
                 case "A": // add student
-                    if (inputStringList.length == ADD_COMMAND_SIZE) {
-                        Student student = setStudent(inputStringList)
-                        if (!roster.contains(student)) {
-                            roster.add(student);
-                        } else {
-                            System.out.println("Roster already contains student");
-                        }
-                    } else {
-                        System.out.println("improper command");
-                        continue;
-                    }
+                    Student student = RosterManager.setStudent(inputStringList);
+                    roster.add(student);
                     break;
                 case "R": //remove
-                    //make a profile with the string
-                    //then compare profile to all other students in roster
-                    //if student matches use record and use in remove function
-                    if(inputStringList.length == REMOVE_COMMAND_SIZE) {
-
-
-                        Student currentStudent = new Student(currentStudentProfile);
-
-                        roster.remove(currentStudent);
-                    } else {
-                        System.out.println("improper command format");
-                        continue;
-                    }
-
+                    Student currentStudent = RosterManager.setStudent(inputStringList);
+                    roster.remove(currentStudent);
                     break;
                 case "P":
-                    if(inputStringList.length == PRINT_COMMAND_SIZE) {
-                        roster.print();
-                    }else{
-                        System.out.println("improper command format");
-                        continue;
-                    }
+                    roster.print();
                     break;
                 case "PS":
                     break;
@@ -97,7 +75,7 @@ public class RosterManager {
                 case "L":
                     break;
                 case "C":
-                    if (inputStringList.length == CHANGE_MAJOR_COMMAND_SIZE) {
+                    /*if (inputStringList.length == CHANGE_MAJOR_COMMAND_SIZE) {
                         Date dob = new Date(inputStringList[3]);
                         Profile currentStudentProfile = new Profile(inputStringList[2], inputStringList[1], dob);
                         String newMajor = inputStringList[4];
@@ -114,12 +92,12 @@ public class RosterManager {
                         continue;
                     }
 
-                    break;
+                    break;*/
                 case "Q":
                     exited = true;
                     break;
                 default:
-                    System.out.println("unrecognized command");
+                    System.out.println(inputStringList[0] + " is an invalid command");
                     continue;
             }
         }
