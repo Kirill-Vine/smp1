@@ -53,6 +53,10 @@ public class Student implements Comparable<Student> {
         return creditsCompleted;
     }
 
+    public void setMajor(Major m) {
+        major = m;
+    }
+
     public static void main(String args[]) {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();

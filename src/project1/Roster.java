@@ -5,17 +5,21 @@ public class Roster {
     private int size = 4;
 
     private void sortStudentProfiles() {
-
-
         for (int i = 0; i < size-1; i++){
-            int min_idx = i;
+            int currentMinimum = i;
+            if(roster[i]==null){
+                continue;
+            }
             for (int j = i+1; j < size; j++) {
-                if (this.roster[j].compareTo(this.roster[min_idx]) < 0) {
-                    min_idx = j;
+                if(roster[j]==null){
+                    continue;
+                }
+                if (this.roster[j].compareTo(this.roster[currentMinimum]) > 0) {
+                    currentMinimum = j;
                 }
             }
-            int temp = this.roster[min_idx];
-            this.roster[min_idx] = this.roster[i];
+            Student temp = this.roster[currentMinimum];
+            this.roster[currentMinimum] = this.roster[i];
             this.roster[i] = temp;
         }
     }
@@ -55,11 +59,9 @@ public class Roster {
             for (int i = 0; i < this.size; i++) {
                 if (this.roster[i] == null) {
                     this.roster[i] = student;
-                    print();
                     return true;
                 }
             }
-            print();
             return true;
         } else {
             System.out.println("student is already in list");
@@ -75,7 +77,6 @@ public class Roster {
                 return true;
             }
         }
-        print();
         return true;
     }//maintain the order after remove
 
@@ -88,6 +89,7 @@ public class Roster {
         return false;
     } //if the student is in roster
     public void print () {
+        sortStudentProfiles();
         for(int i = 0 ; i< size; i++) {
             if(roster[i]!= null) {
                 System.out.println(roster[i].toString());

@@ -18,6 +18,33 @@ public enum Major {
         classCode = tempClassCode;
     }
 
+    public static Major setMajor(String input) {
+        Major output;
+        switch (input) {
+            case "CS":
+                output = Major.CS;
+                break;
+            case "MATH":
+                output = Major.MATH;
+                break;
+            case "EE":
+                output = Major.EE;
+                break;
+            case "ITI":
+                output = Major.ITI;
+                break;
+            case "BAIT":
+                output = Major.BAIT;
+                break;
+            default:
+                System.out.println("Major does not exist");
+                output = null;
+
+        }
+        return output;
+
+    }
+
     public String getSchool() {
         return school;
     }
