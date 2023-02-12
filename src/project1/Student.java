@@ -12,6 +12,11 @@ public class Student implements Comparable<Student> {
         major = m;
         creditsCompleted = cc;
     }
+    Student (Profile p) {
+        profile = p;
+        major = major.CS;
+        creditsCompleted = 0;
+    }
 
 
     @Override
@@ -22,8 +27,7 @@ public class Student implements Comparable<Student> {
     public boolean equals(Object o) {
         if (o instanceof Student) {
             Student student = (Student) o;
-            if (this.profile.equals(student.profile) && this.creditsCompleted == student.creditsCompleted
-                    && this.major == student.major) {
+            if (this.profile.equals(student.profile)) {
                 return true;
 
 
@@ -38,6 +42,15 @@ public class Student implements Comparable<Student> {
         } else {
             return student.profile.compareTo(this.profile);
         }
+    }
+    public Profile getProfile() {
+        return profile;
+    }
+    public Major getMajor() {
+        return major;
+    }
+    public int getCredits() {
+        return creditsCompleted;
     }
 
     public static void main(String args[]) {

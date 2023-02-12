@@ -3,16 +3,21 @@ package project1;
 import java.util.Scanner;
 
 public class RosterManager {
+    final static int ADD_COMMAND_SIZE = 6;
+    final static int REMOVE_COMMAND_SIZE = 4;
 
     public static void main(String args[]) {
         Roster roster = new Roster();
         boolean exited = false;
         Scanner sc = new Scanner(System.in);
         String input = "";
+        //loops inputs until quits
         while (!exited) {
-            final int ADD_COMMAND_SIZE = 6;
+            //A first name last name dob major credits
+
             input = sc.nextLine();
             String[] inputStringList = input.split("\\s+");
+            //list of potential inputs
             switch (inputStringList[0]) {
                 case "A": // add student
 
@@ -42,7 +47,7 @@ public class RosterManager {
                                 continue;
 
                         }
-
+                        //tests credits
                         try {
                             credits = Integer.parseInt(inputStringList[5]);
                         } catch (NumberFormatException nfe) {
@@ -71,7 +76,25 @@ public class RosterManager {
                         continue;
                     }
                     break;
-                case "R":
+                case "R": //remove
+                    //[0]R [1]fn [2]ln [3]dob
+                    // A fgh jkl 1/1/2000 CS 50
+                    // R fgh jkl 1/1/2000
+                    //make a profile with the string
+                    //then compare profile to all other students in roster
+                    //if student matches use record and use in remove function
+                    if(inputStringList.length == REMOVE_COMMAND_SIZE) {
+                        Date dob = new Date(inputStringList[3]);
+                        Profile currentStudentProfile = new Profile(inputStringList[2], inputStringList[1], dob);
+
+                        Student currentStudent = new Student(currentStudentProfile);
+
+                        roster.remove(currentStudent);
+                    } else {
+                        System.out.println("improper command format");
+                        continue;
+                    }
+
                     break;
                 case "P":
                     break;
