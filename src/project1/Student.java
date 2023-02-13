@@ -1,5 +1,4 @@
 package project1;
-import java.util.Scanner;
 
 /**
 Class that records a student's profile, major and credits completed.
