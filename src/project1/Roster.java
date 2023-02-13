@@ -1,11 +1,23 @@
 package project1;
 
+/**
+ This class handles all of the methods used to print and adjust the student roster
+
+ @author Michael Burton
+ @author Kiril Vine
+ */
+
 public class Roster {
     private Student[] roster = new Student[4];
     private int size = 4;
 
     final static int CHANGE_MAJOR_COMMAND_SIZE = 4;
+    
+    final static int GROWTH_INTERVAL = 4;
 
+    /**
+    Sorts the student profiles based lexographically and based on date of birth
+     */
     private void sortStudentProfiles() { //sort by lname, fname, dob
         for (int i = 0; i < size - 1; i++) {
             int currentMinimum = i;
@@ -26,6 +38,10 @@ public class Roster {
         }
     }
 
+    /**
+    Determine whether a roster is empty.
+    @return true if the roster has no students, false if otherwise.
+     */
     private boolean isEmpty() {
         for (int i = 0; i < this.roster.length; i++) {
             if (this.roster[i] != null) {
@@ -35,43 +51,60 @@ public class Roster {
         return true;
     }
 
+    /**
+    Tests whether the roster contains a student.
+    @param student the student to be checked whether it's in the roster.
+    @return true if student is in the roster, and false if otherwise.
+     */
     public boolean contains(Student student) {
-        for(int i = 0; i < size; i++) {
-            if(roster[i]!= null && student.equals(roster[i])) {
+        for (int i = 0; i < size; i++) {
+            if (roster[i] != null && student.equals(roster[i])) {
                 return true;
             }
         }
         return false;
     }
     
+    /**
+    find the index of a given student in the roster
+    @param student the student whose index is to be found
+    @return index of the student in the roster, -1 if the student is not in the roster.
+     */
     private int find(Student student) {
-        if(contains(student)) {
+        if (contains(student)) {
             for (int i = 0; i < size; i++) {
                 if (student.equals(roster[i])) {
                     return i;
                 }
             }
-        } 
+        }
         System.out.println("Student not in Roster");
         return -1;
-    } //search the given student in roster
+    }
 
+    /**
+    Increases the size of the roster array by the GROWTH_INTERVAL.
+     */
     private void grow() {
-        final int GROWTH_INTERVAL = 4;
         Student[] tempList = new Student[size];
         for (int i = 0; i < size; i++) {
             tempList[i] = roster[i];
         }
         size += GROWTH_INTERVAL;
         roster = new Student[size];
-        for (int i = 0; i < size-GROWTH_INTERVAL; i++) {
+        for (int i = 0; i < size - GROWTH_INTERVAL; i++) {
             roster[i] = tempList[i];
-            
-        }
-    } //increase the array capacity by 4
 
+        }
+    }
+
+    /**
+    Add a student to the roster.
+    @param student student to be added to the roster
+    @return return true if the student was successfully added to the roster.
+     */
     public boolean add(Student student) {
-        if(!contains(student)) {
+        if (!contains(student)) {
             if (this.roster[this.size - 1] != null) {
                 this.grow();
             }
@@ -82,14 +115,19 @@ public class Roster {
                     return true;
                 }
             }
-            return true;
+            return false;
         } else {
             System.out.println("student is already in list");
             return false;
         }
 
-    } //add student to end of array
+    }
 
+    /**
+    remove a given student from the roster.
+    @param student student to be removed from the roster.
+    @return true if the student has been removed from the roster, false if otherwise.
+     */
     public boolean remove(Student student) {
         if (!this.isEmpty()) {
             for (int i = 0; i < size; i++) {
@@ -105,21 +143,44 @@ public class Roster {
             System.out.println("Roster is empty!");
             return false;
         }
-    }//maintain the order after remove
+    }
 
-    public void changeMajor(Student student, String newMajor){
+    /**
+    change a student's major
+    @param student student whose major should be staged.
+    @param newMajor String that represents the string.
+     */
+    public void changeMajor(Student student, String newMajor) {
+        Major tempMajor;
         if (student == null) {
             System.out.println("student is null");
         }
         int index = find(student);
         if (index != -1) {
-            roster[index].setMajor(Major.stringToMajor(newMajor));
+            tempMajor = Major.stringToMajor(newMajor);
+            if (tempMajor != null) {
+                roster[index].setMajor(Major.stringToMajor(newMajor));
+            }
         }
-
     }
-     //if the student is in roster
 
+    /**
+    Print all students in the roster of a given major.
+    @param major Major that each student should be printed from.
+     */
+    public void printAllStudentsInMajor(Major major) {
+        System.out.println("**Roster for all " + major.toString() + " majors**");
+        for (int i = 0; i < size; i++) {
+            if (roster[i] != null && roster[i].getMajor().equals(major)) {
+                System.out.println(roster[i].toString());
+            }
+        }
+        System.out.println("** Roster End  **");
+    }
 
+    /**
+    Print the students in the roster sorted lexographically by last name, first name and date of birth.
+     */
     public void print() {
         sortStudentProfiles();
         for (int i = 0; i < size; i++) {
@@ -129,16 +190,9 @@ public class Roster {
         }
     }
 
-    public void printAllStudentsInMajor(Major m) {
-        System.out.println("**Roster for all " + m.toString() + " majors**");
-        for (int i = 0; i < size; i++) {
-            if (roster[i] != null && roster[i].getMajor().equals(m)) {
-                System.out.println(roster[i].toString());
-            }
-        }
-        System.out.println("** Roster End  **");
-    }
-
+    /**
+    Print the each student in the roster, sorted by standing.
+     */
     public void printByStanding() {
         System.out.println("** Roster sorted by standing **");
         int minimum;
@@ -164,16 +218,14 @@ public class Roster {
     }
 
 
-    //print roster sorted by profiles
+    /**
+    print every student in the roster sorted by major.
+     */
     public void printBySchoolMajor() {
         System.out.println("** Roster sorted by school, major **");
         String [] listOfMajors = {"BAIT", "CS", "MATH", "ITI", "EE"};
         for (int i = 0; i < listOfMajors.length; i++) {
-            for (int j = 0; j < size; j++) {
-                if (roster[j] != null && roster[j].getMajor().equals(Major.stringToMajor(listOfMajors[i]))) {
-                    System.out.println(roster[j].toString());
-                }
-            }
+            printAllStudentsInMajor(Major.stringToMajor(listOfMajors[i]));
         }
         System.out.println("**Roster end**");
     }

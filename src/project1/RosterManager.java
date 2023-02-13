@@ -1,7 +1,12 @@
 package project1;
 
 import java.util.Scanner;
+/**
+This class controls the UI and determines which Roster method to run given various commands.
 
+@author Michael Burton
+@author Kiril Vine                    
+*/
 public class RosterManager {
     final static int ADD_COMMAND_SIZE = 6;
     final static int REMOVE_COMMAND_SIZE = 4;
@@ -9,20 +14,24 @@ public class RosterManager {
     final static int CHANGE_MAJOR_COMMAND_SIZE = 5;
     final static int MIN_AGE = 16;
 
-    //creates a student class given a list of inputs
-    public static Student setStudent(String[] inputStringList) {
+    /**
+    Convert an array of strings into a student object
+    @param inputStringList an array of strings that consists of either [command, first name, last name, date of birth, major, credits]
+    or [command, first name, last name, date of birth].
+    @return the Student class that is created with the inputStringList, and null if the inputString is invalid.
+     */
+    private static Student setStudent(String[] inputStringList) {
         Student output = null;
-        if(inputStringList.length == ADD_COMMAND_SIZE) {
+        if (inputStringList.length == ADD_COMMAND_SIZE) {
             Major tempMajor;
             int credits = 0;
-            Date dob = null;
             Date today = new Date();
-            //determine major
+            Date dob = new Date(inputStringList[3]);
+            ;
             tempMajor = Major.stringToMajor(inputStringList[4]);
             if (tempMajor == null) {
                 return null;
             }
-            //tests credits
             try {
                 credits = Integer.parseInt(inputStringList[5]);
             } catch (NumberFormatException nfe) {
@@ -33,30 +42,29 @@ public class RosterManager {
                 System.out.println("credits must be a positive number");
                 return null;
             }
-            dob = new Date(inputStringList[3]);
             if (!dob.isValid()) {
-                System.out.print("DOB Invalid: ");
-                System.out.println(inputStringList[3] + " is not a calendar date!");
+                System.out.println("DOB Invalid: " + inputStringList[3] + " is not a calendar date!");
                 return null;
             }
-            if(today.compareTo(dob) < MIN_AGE) {
-                System.out.print("DOB Invalid: ");
-                System.out.println(inputStringList[3] + " is younger than 16");
+            if (today.compareTo(dob) < MIN_AGE) {
+                System.out.println("DOB Invalid: " + inputStringList[3] + " is younger than 16");
             }
             output = new Student(new Profile(inputStringList[2], inputStringList[1], dob), tempMajor, credits);
-
-        } else if(inputStringList.length == REMOVE_COMMAND_SIZE || inputStringList.length == CHANGE_MAJOR_COMMAND_SIZE) {
+        } else if (inputStringList.length == REMOVE_COMMAND_SIZE
+                || inputStringList.length == CHANGE_MAJOR_COMMAND_SIZE) {
             Date dob = new Date(inputStringList[3]);
             Profile currentStudentProfile = new Profile(inputStringList[2], inputStringList[1], dob);
             output = new Student(currentStudentProfile);
-        }else {
+        } else {
             System.out.println("improper command");
         }
         return output;
-
     }
 
-    public static void main(String args[]) {
+    /**
+    Run the UI for the student roster.
+     */
+    public void run() {
         Roster roster = new Roster();
         boolean exited = false;
         Scanner sc = new Scanner(System.in);
@@ -79,18 +87,7 @@ public class RosterManager {
                     break;
                 case "PC":
                     roster.printBySchoolMajor();
-                    /*
-A April Doe 1/20/2003 EE 105
-A Jane Doe 5/1/1996 CS 30
-A April March 3/31/2000 BAIT 109
-A Kate Lindsey 7/15/2002 ITI 59
-A Paul Siegel 5/15/2000 MATH 90
-A Hkjn Siegel 5/12/2002 CS 90
-A Paul Jufhei 3/11/2000 ITI 90
-A Yjnk Siegel 5/1/2000 EE 90
-A Paul Ij 7/1/2000 MATH 90
-PC
-                     */
+
                     break;
                 case "L":
                     roster.printAllStudentsInMajor(Major.stringToMajor(inputStringList[1]));
@@ -108,5 +105,4 @@ PC
             }
         }
     }
-
 }
