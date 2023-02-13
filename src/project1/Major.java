@@ -17,8 +17,7 @@ public enum Major {
         school = tempSchool;
         classCode = tempClassCode;
     }
-
-    public static Major setMajor(String input) {
+    public static Major stringToMajor(String input) {
         Major output;
         switch (input.toUpperCase()) {
             case "CS":

@@ -58,9 +58,8 @@ public class Date implements Comparable<Date> {
         final int NON_LEAP_YEAR = 28;
         final int LEAP_YEAR = 29;
         final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
-        final int MIN_AGE = 16;
 
-        if(this.month > MONTHS_PER_YEAR || this.year > CURRENT_YEAR || this.month < JANUARY || this.year > CURRENT_YEAR-MIN_AGE){
+        if(this.month > MONTHS_PER_YEAR || this.year > CURRENT_YEAR || this.month < JANUARY){
             return false;
         }
         switch(this.month){
@@ -96,6 +95,15 @@ public class Date implements Comparable<Date> {
         }
         return true;
     } //check if a date is a valid calendar date
+    public int getYear() {
+        return year;
+    }
+    public int getMonth() {
+        return month;
+    }
+    public int getDay() {
+        return day;
+    }
 
 
     @Override public String toString() {
@@ -111,20 +119,19 @@ public class Date implements Comparable<Date> {
         }
         return false;
     }
+    //returns difference between dates in years
     @Override public int compareTo(Date d) {
-        if(this.year > d.year) {
-            return 1;
+        final int ROUND_DOWN = 1;
+        if(this.month == d.month && this.year == d.year && this.day == d.day) {
+            return 0;
         } else if (this.year == d.year) {
-            if(this.month > d.month) {
-                return 1;
-            } else if (this.month == d.month) {
-                if(this.day > d.day) {
-                    return 1;
-                } else if (this.day == d.day) {
-                    return 0;
-                }
-            }
+            return 1;
         }
-        return -1;
+        //1/1/2002 1/2/2003
+        if(this.month < d.month && this.day < d.day) {
+            return this.year - d.year;
+        } else {
+            return this.year-d.year-ROUND_DOWN;
+        }
     }
 }

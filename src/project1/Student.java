@@ -19,18 +19,29 @@ public class Student implements Comparable<Student> {
     }
 
 
+
     @Override
     public String toString() {
-        return profile.toString() + " " + major.getMajor() + " " + major.getSchool() + " " +  major.getClassCode() + " " + creditsCompleted;
+        String output;
+        output = profile.toString() + " (" + major.getClassCode() + " " + major.getMajor() + " " +  major.getSchool() +  " + creditsCompleted: " + creditsCompleted;
+        if(creditsCompleted < 30) {
+            output += "(Freshman)";
+        } else if(creditsCompleted < 60) {
+            output += "(Sophomore)";
+        } else if(creditsCompleted < 90) {
+            output+= "(Junior)";
+        } else if (creditsCompleted < 120) {
+            output+= "(Senior)";
+        }
+        return output;
     }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof Student) {
             Student student = (Student) o;
             if (this.profile.equals(student.profile)) {
                 return true;
-
-
             }
         }
         return false;
@@ -43,6 +54,8 @@ public class Student implements Comparable<Student> {
             return student.profile.compareTo(this.profile);
         }
     }
+
+    //getter methods
     public Profile getProfile() {
         return profile;
     }
@@ -53,38 +66,9 @@ public class Student implements Comparable<Student> {
         return creditsCompleted;
     }
 
-    public void setMajor(Major m) {
+    //setter methods
+    public void setMajor (Major m) {
         major = m;
-    }
-
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        String inputList[] = input.split("\\s+");
-        //sets major depending on string
-        Major majorInput = null;
-        switch (inputList[3]) {
-            case "EE":
-                majorInput = Major.EE;
-                break;
-            case "CS":
-                majorInput = Major.CS;
-                break;
-            case "MATH":
-                majorInput = Major.MATH;
-                break;
-            case "ITI":
-                majorInput = Major.ITI;
-                break;
-            case "BAIT":
-                majorInput = Major.BAIT;
-                break;
-
-
-        }
-        Student test = new Student(new Profile(inputList[0], inputList[1], new Date(inputList[2])), majorInput,
-                Integer.parseInt(inputList[4]));
-        System.out.println(test.toString());
     }
 }
 
