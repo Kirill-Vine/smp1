@@ -21,13 +21,11 @@ public class RosterManager {
     @return the Student class that is created with the inputStringList, and null if the inputString is invalid.
      */
     private static Student setStudent(String[] inputStringList) {
-        Student output = null;
-        if (inputStringList.length == ADD_COMMAND_SIZE) {
+        if (inputStringList[0].equals("A") && inputStringList.length == ADD_COMMAND_SIZE) {
             Major tempMajor;
             int credits = 0;
             Date today = new Date();
             Date dob = new Date(inputStringList[3]);
-            ;
             tempMajor = Major.stringToMajor(inputStringList[4]);
             if (tempMajor == null) {
                 return null;
@@ -46,19 +44,22 @@ public class RosterManager {
                 System.out.println("DOB Invalid: " + inputStringList[3] + " is not a calendar date!");
                 return null;
             }
+            System.out.println("compareTo " + today.compareTo(dob));
             if (today.compareTo(dob) < MIN_AGE) {
+                
                 System.out.println("DOB Invalid: " + inputStringList[3] + " is younger than 16");
+                return null;
             }
-            output = new Student(new Profile(inputStringList[2], inputStringList[1], dob), tempMajor, credits);
-        } else if (inputStringList.length == REMOVE_COMMAND_SIZE
+            return new Student(new Profile(inputStringList[2], inputStringList[1], dob), tempMajor, credits);
+        } else if (!inputStringList[0].equals("A") && inputStringList.length == REMOVE_COMMAND_SIZE
                 || inputStringList.length == CHANGE_MAJOR_COMMAND_SIZE) {
             Date dob = new Date(inputStringList[3]);
             Profile currentStudentProfile = new Profile(inputStringList[2], inputStringList[1], dob);
-            output = new Student(currentStudentProfile);
+            return new Student(currentStudentProfile);
         } else {
             System.out.println("improper command");
+            return null;
         }
-        return output;
     }
 
     /**
