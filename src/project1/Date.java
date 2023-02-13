@@ -170,11 +170,10 @@ public class Date implements Comparable<Date> {
             }
             return 1;
         }
-        if (this.month > d.month && this.day > d.day) {
-            return d.year - this.year;
-        } else {
-            return d.year - this.year - ROUND_DOWN;
+        if (this.month < d.month || (this.month == d.month && this.day < d.day)) {
+            return (this.year - d.year) - ROUND_DOWN;
         }
+        return this.year - d.year;
     }
     
     public static void main(String args[]) {

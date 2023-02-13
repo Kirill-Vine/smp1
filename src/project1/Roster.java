@@ -208,25 +208,22 @@ public class Roster {
     Print the each student in the roster, sorted by standing.
      */
     public void printByStanding() {
+        final int FRESHMAN = 30;
+        final int STANDING = 30;
+        final int SOPHOMORE = 60;
+        final int JUNIOR = 90;
+        final int SENIOR = 120;
+        int[] standingsLexographically = { FRESHMAN, JUNIOR, SENIOR, SOPHOMORE };
         if (!isEmpty()) {
             System.out.println("** Roster sorted by standing **");
-            int minimum;
-            int minIndex = 0;
-            for (int i = 0; i < size; i++) {
-                minimum = Integer.MAX_VALUE;
-                for (int j = i; j < size; j++) {
-                    if (roster[j] != null && roster[j].getCredits() < minimum) {
-                        minimum = roster[j].getCredits();
-                        minIndex = j;
+            
+            for (int j = 0; j < standingsLexographically.length; j++) {
+                for (int i = 0; i < size; i++) {
+                    if (roster[i] != null && roster[i].getCredits() < standingsLexographically[j]
+                            && roster[i].getCredits() >= standingsLexographically[j] - STANDING) {
+                        System.out.println(roster[i].toString());
                     }
-                }
-                Student temp = roster[i];
-                roster[i] = roster[minIndex];
-                roster[minIndex] = temp;
-            }
-            for (int i = 0; i < size; i++) {
-                if (roster[i] != null) {
-                    System.out.println(roster[i]);
+
                 }
             }
             System.out.println("** Roster End ** ");

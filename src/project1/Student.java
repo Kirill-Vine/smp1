@@ -34,16 +34,20 @@ public class Student implements Comparable<Student> {
      */
     @Override
     public String toString() {
+        final int FRESHMAN = 30;
+        final int SOPHOMORE = 60;
+        final int JUNIOR = 90;
+        final int SENIOR = 120;
         String output;
         output = profile.toString() + " (" + major.getClassCode() + " " + major.getMajor() + " " + major.getSchool()
                 + " creditsCompleted: " + creditsCompleted;
-        if (creditsCompleted < 30) {
+        if (creditsCompleted <  FRESHMAN) {
             output += "(Freshman)";
-        } else if (creditsCompleted < 60) {
+        } else if (creditsCompleted < SOPHOMORE) {
             output += "(Sophomore)";
-        } else if (creditsCompleted < 90) {
+        } else if (creditsCompleted < JUNIOR) {
             output += "(Junior)";
-        } else if (creditsCompleted < 120) {
+        } else {
             output += "(Senior)";
         }
         return output;
