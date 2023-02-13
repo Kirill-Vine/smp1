@@ -19,15 +19,18 @@ public class RosterManager {
             Date today = new Date();
             //determine major
             tempMajor = Major.stringToMajor(inputStringList[4]);
+            if (tempMajor == null) {
+                return null;
+            }
             //tests credits
             try {
                 credits = Integer.parseInt(inputStringList[5]);
             } catch (NumberFormatException nfe) {
-                System.out.println("improper credits amount");
+                System.out.println("credits must be an integer");
                 return null;
             }
             if (credits < 0) {
-                System.out.println("improper credits amount");
+                System.out.println("credits must be a positive number");
                 return null;
             }
             dob = new Date(inputStringList[3]);
@@ -72,7 +75,7 @@ public class RosterManager {
                     roster.print();
                     break;
                 case "PS":
-                    //roster.printByStanding();
+                    roster.printByStanding();
                     break;
                 case "PC":
                     roster.printBySchoolMajor();
@@ -96,7 +99,7 @@ PC
                     roster.changeMajor(RosterManager.setStudent(inputStringList), inputStringList[4]);
                     break;
                 case "Q":
-                    System.out.println("accesses quit command");
+                    System.out.println("Closing Roster...");
                     exited = true;
                     break;
                 default:

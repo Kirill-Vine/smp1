@@ -1,117 +1,150 @@
+
+
 package project1;
 
 import java.util.Calendar;
+
+/**
+ * Represents a day of the year on a calendar day.
+ *  @param String date
+ * A string written in the syntax "mm/dd/yyyy"
+ * 
+ * @author Michael Burton
+ * @author Kiril Vine
+ * 
+ */
+
 public class Date implements Comparable<Date> {
+    
+
     private int year;
     private int month;
     private int day;
-    public Date() {
-        this.year=Calendar.getInstance().get(Calendar.YEAR);
-        this.month=Calendar.getInstance().get(Calendar.MONTH)+1;
-        this.day=Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-    } //create an object with today’s date (see Calendar class)
-    public Date(String date) {
-        String[] dateArray = date.split("/",0);
-        try {
-            this.month = Integer.parseInt(dateArray[0]);
-            this.day = Integer.parseInt(dateArray[1]);
-            this.year = Integer.parseInt(dateArray[2]);
-        } catch (NumberFormatException nfe){
-            System.out.println("date must be numbers");
-            this.year = -1;
-            this.month = -1;
-            this.day = -1;
-        }
-    }
-    //take mm/dd/yyyy and create a Date object
-    private boolean isLeap(){
-        final int QUADRENNIAL = 4;
-        final int CENTENNIAL = 100;
-        final int QUATERCENTENNIAL = 400;
-        if (this.year % QUATERCENTENNIAL == 0) {
-            return true;
-        }
-        if (this.year % CENTENNIAL == 0) {
-            return false;
-        }
-        if (this.year % QUADRENNIAL == 0) {
-            return true;
-        }
-        return  false;
-    }//check if the year is a leap year
-    public boolean isValid() {
-        final int JANUARY = 1;
-        final int FEBRUARY = 2;
-        final int MARCH = 3;
-        final int APRIL = 4;
-        final int MAY = 5;
-        final int JUNE = 6;
-        final int JULY = 7;
-        final int AUGUST = 8;
-        final int SEPTEMBER = 9;
-        final int OCTOBER = 10;
-        final int NOVEMBER = 11;
-        final int DECEMBER = 12;
-        final int MONTHS_PER_YEAR = 12;
-        final int LONG_MONTHS = 31;
-        final int SHORT_MONTHS = 30;
-        final int NON_LEAP_YEAR = 28;
-        final int LEAP_YEAR = 29;
-        final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
 
-        if(this.month > MONTHS_PER_YEAR || this.year > CURRENT_YEAR || this.month < JANUARY){
+    
+    //create an object with today’s date (see Calendar class)
+    public Date() {
+        this.year = Calendar.getInstance().get(Calendar.YEAR);
+        this.month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        this.day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    }
+
+    
+   //take mm/dd/yyyy and create a Date object
+   public Date(String date) {
+       String[] dateArray = date.split("/", 0);
+       try {
+           this.month = Integer.parseInt(dateArray[0]);
+           this.day = Integer.parseInt(dateArray[1]);
+           this.year = Integer.parseInt(dateArray[2]);
+       } catch (NumberFormatException nfe) {
+           System.out.println("date must be numbers");
+           this.year = -1;
+           this.month = -1;
+           this.day = -1;
+       }
+   }
+    
+   /**
+   Tests if the Date class's year is a leap year.
+   @return true if the year is a leap year, false if otherwise.
+   */
+   private boolean isLeap() {
+       final int QUADRENNIAL = 4;
+       final int CENTENNIAL = 100;
+       final int QUATERCENTENNIAL = 400;
+       if (this.year % QUATERCENTENNIAL == 0) {
+           return true;
+       }
+       if (this.year % CENTENNIAL == 0) {
+           return false;
+       }
+       if (this.year % QUADRENNIAL == 0) {
+           return true;
+       }
+       return false;
+   }
+
+   /**
+   Converts an integer to the month enum it should correspond to.
+   @param input integer that corresponds to a month
+   @return Month that has the same monthNumber as int input
+   */
+    public Month intToMonth(int input) {
+       if (input == 2) {
+           if (isLeap()) {
+               return Month.FEBRUARY_LEAP;
+           } else {
+               return Month.FEBRUARY;
+           }
+       } else {
+           for (Month month : Month.values()) {
+               if (input == month.getMonthNumber()) {
+                   return month;
+               }
+           }
+       }
+       return null;
+   }
+   
+   /**
+   * Determines whether not the current Date class represents a valid calendar date.
+   @return true if the date is a valid calendar date, false if otherwise
+   */
+    public boolean isValid() {
+        final int POSITIVE_NUMBERS = 0;
+        final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
+        if (this.month <= POSITIVE_NUMBERS || this.day <= POSITIVE_NUMBERS || 
+        this.month > Month.DECEMBER.getMonthNumber() || this.year > CURRENT_YEAR || 
+        this.month < Month.JANUARY.getMonthNumber()) {
             return false;
         }
-        switch(this.month){
-            case JANUARY:
-            case MARCH:
-            case MAY:
-            case JULY:
-            case AUGUST:
-            case OCTOBER:
-            case DECEMBER:
-                if(this.day > LONG_MONTHS || this.day<JANUARY){
-                    return false;
-                }
-                break;
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER:
-                if(this.day > SHORT_MONTHS){
-                    return false;
-                }
-                break;
-            case FEBRUARY:
-                if (this.isLeap()){
-                    if(this.day<=LEAP_YEAR)
-                        return true;
-                    return false;
-                }else{
-                    if(this.day<=NON_LEAP_YEAR){
-                        return true;}
-                    return false;
-                }
+        Month currentMonth = intToMonth(this.month);
+        if (this.day > currentMonth.getDays()) {
+            return false;
         }
         return true;
-    } //check if a date is a valid calendar date
+    }
+    
+    /**
+     Getter method for year
+     @return year integer variable
+    */
     public int getYear() {
         return year;
     }
+    /**
+     Getter method for month
+     @return month integer variable
+    */
     public int getMonth() {
         return month;
     }
+    /**
+     Getter method for day
+     @return day integer variable
+    */
     public int getDay() {
         return day;
     }
 
-
-    @Override public String toString() {
-
+    /**
+     returns Date class as a string
+     @return Date class as a string writtten as mm/dd/yyyy
+     */
+    @Override
+    public String toString() {
         return month + "/" + day + "/" + year;
     }
-    @Override public boolean equals(Object o) {
-        if(o instanceof Date) {
+    
+    /**
+     method tests whether 2 date classes are equivalent
+     @param Object takes an object class to compare to the Date class
+     @return true if the object is a date class that matches the current Date class's month, day, and year, false if not.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Date) {
             Date date = (Date) o;
             if (date.month == this.month && date.day == this.day && date.year == this.year) {
                 return true;
@@ -119,7 +152,12 @@ public class Date implements Comparable<Date> {
         }
         return false;
     }
-    //returns difference between dates in years
+    
+    /**
+     Finds the difference between 2 date classes in terms of years
+    @param Date date class that is to be compared to current class
+    @return returns difference between the 2 dates in terms of years apart.
+     */
     @Override public int compareTo(Date d) {
         final int ROUND_DOWN = 1;
         if(this.month == d.month && this.year == d.year && this.day == d.day) {
@@ -127,7 +165,6 @@ public class Date implements Comparable<Date> {
         } else if (this.year == d.year) {
             return 1;
         }
-        //1/1/2002 1/2/2003
         if(this.month < d.month && this.day < d.day) {
             return this.year - d.year;
         } else {

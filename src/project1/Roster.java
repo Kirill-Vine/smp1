@@ -34,6 +34,16 @@ public class Roster {
         }
         return true;
     }
+
+    public boolean contains(Student student) {
+        for(int i = 0; i < size; i++) {
+            if(roster[i]!= null && student.equals(roster[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private int find(Student student) {
         if(contains(student)) {
             for (int i = 0; i < size; i++) {
@@ -41,9 +51,8 @@ public class Roster {
                     return i;
                 }
             }
-        } else {
-            return -1;
-        }
+        } 
+        System.out.println("Student not in Roster");
         return -1;
     } //search the given student in roster
 
@@ -99,140 +108,74 @@ public class Roster {
     }//maintain the order after remove
 
     public void changeMajor(Student student, String newMajor){
-        if(student == null) {
+        if (student == null) {
             System.out.println("student is null");
         }
-        roster[find(student)].setMajor(Major.stringToMajor(newMajor));
+        int index = find(student);
+        if (index != -1) {
+            roster[index].setMajor(Major.stringToMajor(newMajor));
+        }
 
     }
-    public boolean contains(Student student) {
-        for(int i = 0; i < size; i++) {
-            if(roster[i]!= null && student.equals(roster[i])) {
-                return true;
-            }
-        }
-        return false;
-    } //if the student is in roster
+     //if the student is in roster
 
 
-    public void print () {
+    public void print() {
         sortStudentProfiles();
-        for(int i = 0 ; i < size; i++) {
-            if(roster[i] != null) {
+        for (int i = 0; i < size; i++) {
+            if (roster[i] != null) {
                 System.out.println(roster[i].toString());
-            } else {
-                System.out.println("null");
             }
         }
     }
+
     public void printAllStudentsInMajor(Major m) {
-        System.out.println("*Roster for all " + m.toString() + " majors");
-        for(int i = 0; i < size; i++) {
-            if(roster[i] != null && roster[i].getMajor().equals(m)) {
+        System.out.println("**Roster for all " + m.toString() + " majors**");
+        for (int i = 0; i < size; i++) {
+            if (roster[i] != null && roster[i].getMajor().equals(m)) {
                 System.out.println(roster[i].toString());
             }
         }
-        System.out.println("*");
+        System.out.println("** Roster End  **");
+    }
+
+    public void printByStanding() {
+        System.out.println("** Roster sorted by standing **");
+        int minimum;
+        int minIndex = 0;
+        for (int i = 0; i < size; i++) {
+            minimum = Integer.MAX_VALUE;
+            for (int j = i; j < size; j++) {
+                if (roster[j] != null && roster[j].getCredits() < minimum) {
+                    minimum = roster[j].getCredits();
+                    minIndex = j;
+                }
+            }
+            Student temp = roster[i];
+            roster[i] = roster[minIndex];
+            roster[minIndex] = temp;
+        }
+        for (int i = 0; i < size; i++) {
+            if (roster[i] != null) {
+                System.out.println(roster[i]);
+            }
+        }
+        System.out.println("** Roster End ** ");
     }
 
 
     //print roster sorted by profiles
     public void printBySchoolMajor() {
+        System.out.println("** Roster sorted by school, major **");
         String [] listOfMajors = {"BAIT", "CS", "MATH", "ITI", "EE"};
-        Student [] newRoster = this.roster;
-        int count = 0;
-        for (int i = 0; i < size; i++) {
-            if(roster[i] == null) {
-                continue;
-            }
-            System.out.println(this.roster[i].getMajor());
-            if (this.roster[i].getMajor().equals(Major.stringToMajor(listOfMajors[0]))) {
-                //System.out.print(roster[i].getMajor());
-                newRoster[count]=this.roster[i];
-                count+=1;
+        for (int i = 0; i < listOfMajors.length; i++) {
+            for (int j = 0; j < size; j++) {
+                if (roster[j] != null && roster[j].getMajor().equals(Major.stringToMajor(listOfMajors[i]))) {
+                    System.out.println(roster[j].toString());
+                }
             }
         }
-        System.out.println("---------");
-        for (int i = 0; i < size; i++) {
-            if(roster[i] == null) {
-                continue;
-            }
-            System.out.println(this.roster[i].getMajor());
-            if (this.roster[i].getMajor().equals(Major.stringToMajor(listOfMajors[1]))) {
-                //System.out.print(roster[i].getMajor());
-                newRoster[count]=this.roster[i];
-                count+=1;
-            }
-        }
-        System.out.println("---------");
-        for (int i = 0; i < size; i++) {
-            if(roster[i] == null) {
-                continue;
-            }
-            System.out.println(this.roster[i].getMajor());
-            if (this.roster[i].getMajor().equals(Major.stringToMajor(listOfMajors[2]))) {
-                //System.out.print(roster[i].getMajor());
-                newRoster[count]=this.roster[i];
-                count+=1;
-            }
-        }
-        System.out.println("---------");
-        for (int i = 0; i < size; i++) {
-            if(roster[i] == null) {
-                continue;
-            }
-            System.out.println(this.roster[i].getMajor());
-            if (this.roster[i].getMajor().equals(Major.stringToMajor(listOfMajors[3]))) {
-
-                newRoster[count]=this.roster[i];
-                count+=1;
-            }
-        }
-        System.out.println("---------");
-        for (int i = 0; i < size; i++) {
-            if(roster[i] == null) {
-                continue;
-            }
-            System.out.println(this.roster[i].getMajor());
-            if (this.roster[i].getMajor().equals(Major.stringToMajor(listOfMajors[4]))) {
-                //System.out.print(roster[i].getMajor());
-                newRoster[count]=this.roster[i];
-                count+=1;
-            }
-        }
-
-        //print
-        for(int i = 0 ; i < size; i++) {
-            if(newRoster[i] != null) {
-                System.out.println(newRoster[i].toString());
-            }
-        }
-    } //print roster sorted by school major
-
-//    public void printByStanding() {
-//        int minIndex;
-//        for(int i = 0; i < size; i++) {
-//            if(roster[i] == null) {
-//                continue;
-//            }
-//            minIndex = Integer.MAX_VALUE;
-//            for(int j = i; j < size; j++) {
-//                if(roster[j] == null) {
-//                    continue;
-//                }
-//                if (roster[j] < minIndex) {
-//                    minIndex = j;
-//                }
-//            }
-//            Student temp = roster[i];
-//            roster[i] = roster[minIndex];
-//            roster[j] = temp;
-//        }
-//        for(int i = 0 ; i < size;i ++) {
-//            if(roster[i] != null) {
-//                System.out.println(roster[i].toString());
-//            }
-//        }
-//    } //print roster sorted by standing
+        System.out.println("**Roster end**");
+    }
 
 }
