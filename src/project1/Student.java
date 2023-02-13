@@ -8,7 +8,7 @@ Class that records a student's profile, major and credits completed.
 @param m Major of the student.
 @param cc int that represents the number of credits the student completed.
 @author Michael Burton
-@author Kiril Vine
+@author Kirill Vine
  */
 public class Student implements Comparable<Student> {
     private Profile profile;

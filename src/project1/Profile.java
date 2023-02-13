@@ -8,7 +8,7 @@ Class that contains a student's first name, last name and Date of Birth
 @param fname first name of the student as a String
 @param dob Date of Birth of the student as a Date class
 @author Michael Burton
-@author Kiril Vine
+@author Kirill Vine
  */
 public class Profile implements Comparable<Profile> {
     private String lname;

@@ -1,5 +1,3 @@
-
-
 package project1;
 
 import java.util.Calendar;
@@ -10,7 +8,7 @@ import java.util.Calendar;
  * A string written in the syntax "mm/dd/yyyy"
  * 
  * @author Michael Burton
- * @author Kiril Vine
+ * @author Kirill Vine
  * 
  */
 

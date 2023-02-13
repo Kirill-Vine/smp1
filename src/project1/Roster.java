@@ -4,7 +4,7 @@ package project1;
  This class handles all of the methods used to print and adjust the student roster
 
  @author Michael Burton
- @author Kiril Vine
+ @author Kirill Vine
  */
 
 public class Roster {

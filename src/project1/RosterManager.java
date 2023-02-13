@@ -5,7 +5,7 @@ import java.util.Scanner;
 This class controls the UI and determines which Roster method to run given various commands.
 
 @author Michael Burton
-@author Kiril Vine                    
+@author Kirill Vine
 */
 public class RosterManager {
     final static int ADD_COMMAND_SIZE = 6;
