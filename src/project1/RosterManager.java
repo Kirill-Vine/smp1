@@ -87,10 +87,9 @@ public class RosterManager {
                     break;
                 case "PC":
                     roster.printBySchoolMajor();
-
                     break;
                 case "L":
-                    roster.printAllStudentsInMajor(Major.stringToMajor(inputStringList[1]));
+                    roster.printAllStudentsInSchool(inputStringList[1]);
                     break;
                 case "C":
                     roster.changeMajor(RosterManager.setStudent(inputStringList), inputStringList[4]);

@@ -159,17 +159,62 @@ public class Date implements Comparable<Date> {
     @param Date date class that is to be compared to current class
     @return returns difference between the 2 dates in terms of years apart.
      */
-    @Override public int compareTo(Date d) {
+    @Override
+    public int compareTo(Date d) {
         final int ROUND_DOWN = 1;
-        if(this.month == d.month && this.year == d.year && this.day == d.day) {
+        if (this.month == d.month && this.year == d.year && this.day == d.day) {
             return 0;
         } else if (this.year == d.year) {
+            if (this.month < d.month || (this.month == d.month && this.day < d.day)) {
+                return -1;
+            }
             return 1;
         }
-        if(this.month < d.month && this.day < d.day) {
-            return this.year - d.year;
+        if (this.month > d.month && this.day > d.day) {
+            return d.year - this.year;
         } else {
-            return this.year-d.year-ROUND_DOWN;
+            return d.year - this.year - ROUND_DOWN;
+        }
+    }
+    
+    public static void main(String args[]) {
+        String[] testStringDate = {"1/31/2003",
+            "1/32/2003",
+            "2/29/2004",
+            "2/32/2004",
+            "2/28/2003",
+            "2/29/2003",
+            "2/28/2003",
+            "2/29/2003",
+            "4/31/2003",
+            "4/32/2003",
+            "5/30/2003",
+            "5/32/2003",
+            "6/30/2003",
+            "6/32/2003",
+            "7/31/2003",
+            "7/32/2003",
+            "8/31/2003",
+            "8/32/2003",
+            "9/30/2003",
+            "9/32/2003",
+            "10/31/2003",
+            "10/32/2003",
+            "11/30/2003",
+            "11/32/2003",
+            "12/31/2003",
+            "12/32/2003",
+            "13/1/2003",
+            "-1/31/2003",
+            "1/0/2003",
+            "1/1/2222",
+            "3/31/2003",
+            "3/32/2003"
+        };
+        Date test;
+        for (int i = 0; i < testStringDate.length; i++) {
+            test = new Date(testStringDate[i]);
+            System.out.println("input: " + testStringDate[i] + " output: " + test.isValid());
         }
     }
 }

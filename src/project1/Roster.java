@@ -104,6 +104,9 @@ public class Roster {
     @return return true if the student was successfully added to the roster.
      */
     public boolean add(Student student) {
+        if (student == null) {
+            return false;
+        }
         if (!contains(student)) {
             if (this.roster[this.size - 1] != null) {
                 this.grow();
@@ -112,6 +115,7 @@ public class Roster {
             for (int i = 0; i < this.size; i++) {
                 if (this.roster[i] == null) {
                     this.roster[i] = student;
+                    System.out.println(student.getProfile().toString() + " has been added to the roster");
                     return true;
                 }
             }
@@ -133,7 +137,7 @@ public class Roster {
             for (int i = 0; i < size; i++) {
                 if (this.roster[i] != null && this.roster[i].equals(student)) {
                     roster[i] = null;
-                    System.out.println("Student has been removed");
+                    System.out.println(student.getProfile().toString() + " has been removed");
                     return true;
                 }
             }
@@ -165,28 +169,38 @@ public class Roster {
     }
 
     /**
-    Print all students in the roster of a given major.
-    @param major Major that each student should be printed from.
+    Print all students in the roster of a given school.
+    @param school school that each student should be printed from.
      */
-    public void printAllStudentsInMajor(Major major) {
-        System.out.println("**Roster for all " + major.toString() + " majors**");
-        for (int i = 0; i < size; i++) {
-            if (roster[i] != null && roster[i].getMajor().equals(major)) {
-                System.out.println(roster[i].toString());
+    public void printAllStudentsInSchool(String school) {
+        if (!isEmpty()) {
+            System.out.println("**Roster for " + school + " **");
+            for (int i = 0; i < size; i++) {
+                if (roster[i] != null && roster[i].getMajor().getSchool().equals(school.toUpperCase())) {
+                    System.out.println(roster[i].toString());
+                }
             }
+            System.out.println("** Roster End  **");
+        } else {
+            System.out.println("Roster is empty");
         }
-        System.out.println("** Roster End  **");
     }
 
     /**
     Print the students in the roster sorted lexographically by last name, first name and date of birth.
      */
     public void print() {
-        sortStudentProfiles();
-        for (int i = 0; i < size; i++) {
-            if (roster[i] != null) {
-                System.out.println(roster[i].toString());
+        if (!isEmpty()) {
+            System.out.println("** Roster sorted by first name, last name and DOB **");
+            sortStudentProfiles();
+            for (int i = 0; i < size; i++) {
+                if (roster[i] != null) {
+                    System.out.println(roster[i].toString());
+                }
             }
+            System.out.println("** Roster End **");
+        } else {
+            System.out.println("Roster is empty");
         }
     }
 
@@ -194,27 +208,31 @@ public class Roster {
     Print the each student in the roster, sorted by standing.
      */
     public void printByStanding() {
-        System.out.println("** Roster sorted by standing **");
-        int minimum;
-        int minIndex = 0;
-        for (int i = 0; i < size; i++) {
-            minimum = Integer.MAX_VALUE;
-            for (int j = i; j < size; j++) {
-                if (roster[j] != null && roster[j].getCredits() < minimum) {
-                    minimum = roster[j].getCredits();
-                    minIndex = j;
+        if (!isEmpty()) {
+            System.out.println("** Roster sorted by standing **");
+            int minimum;
+            int minIndex = 0;
+            for (int i = 0; i < size; i++) {
+                minimum = Integer.MAX_VALUE;
+                for (int j = i; j < size; j++) {
+                    if (roster[j] != null && roster[j].getCredits() < minimum) {
+                        minimum = roster[j].getCredits();
+                        minIndex = j;
+                    }
+                }
+                Student temp = roster[i];
+                roster[i] = roster[minIndex];
+                roster[minIndex] = temp;
+            }
+            for (int i = 0; i < size; i++) {
+                if (roster[i] != null) {
+                    System.out.println(roster[i]);
                 }
             }
-            Student temp = roster[i];
-            roster[i] = roster[minIndex];
-            roster[minIndex] = temp;
+            System.out.println("** Roster End ** ");
+        } else {
+            System.out.println("Roster is empty");
         }
-        for (int i = 0; i < size; i++) {
-            if (roster[i] != null) {
-                System.out.println(roster[i]);
-            }
-        }
-        System.out.println("** Roster End ** ");
     }
 
 
@@ -222,12 +240,20 @@ public class Roster {
     print every student in the roster sorted by major.
      */
     public void printBySchoolMajor() {
-        System.out.println("** Roster sorted by school, major **");
-        String [] listOfMajors = {"BAIT", "CS", "MATH", "ITI", "EE"};
-        for (int i = 0; i < listOfMajors.length; i++) {
-            printAllStudentsInMajor(Major.stringToMajor(listOfMajors[i]));
+        if (!isEmpty()) {
+            System.out.println("** Roster sorted by school, major **");
+            String[] listOfMajors = { "BAIT", "CS", "MATH", "ITI", "EE" };
+            for (int i = 0; i < listOfMajors.length; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (roster[j] != null && roster[j].getMajor().equals(Major.stringToMajor(listOfMajors[i]))) {
+                        System.out.println(roster[j].toString());
+                    }
+                }
+            }
+            System.out.println("** Roster End **");
+        } else {
+            System.out.println("Roster is empty");
         }
-        System.out.println("**Roster end**");
     }
 
 }

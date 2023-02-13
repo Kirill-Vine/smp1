@@ -27,7 +27,7 @@ public class Profile implements Comparable<Profile> {
      */
     @Override
     public String toString() {
-        return "" + lname + " " + fname + " " + dob.toString();
+        return "" + fname + " " + lname + " " + dob.toString();
     }
     
     /**
@@ -39,7 +39,7 @@ public class Profile implements Comparable<Profile> {
     public boolean equals(Object o) {
         if (o instanceof Profile) {
             Profile profile = (Profile) o;
-            if (profile.lname.equals(this.lname) && profile.fname.equals(this.fname) && profile.dob.equals(this.dob)) {
+            if (profile.lname.toUpperCase().equals(this.lname.toUpperCase()) && profile.fname.toUpperCase().equals(this.fname.toUpperCase()) && profile.dob.equals(this.dob)) {
                 return true;
             }
         }

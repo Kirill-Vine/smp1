@@ -102,8 +102,28 @@ public class Student implements Comparable<Student> {
     }
 
     //setter methods
-    public void setMajor (Major m) {
+    public void setMajor(Major m) {
         major = m;
+    }
+    
+    public static void main(String args[]) {
+        String[][] testStringStudent  = {
+            {"John Smith 1/1/2002", "John Smith 1/1/2002"}, 
+            { "John Smith 1/1/2002", "Alex Jones 1/1/2002" },
+            {"Alex Jones 1/1/2002", "John Smith 1/1/2002"},
+                { "John Smith 1/1/2002", "John Smith 1/2/2002"},
+            {"John Smith 1/2/2002", "John Smith 1/1/2002"}
+        };
+        for (int i = 0; i < testStringStudent.length; i++) {
+            String[] studentAStringList = testStringStudent[i][0].split("\\s+");
+            String[] studentBStringList = testStringStudent[i][1].split("\\s");
+            Student studentA = new Student(
+                new Profile(studentAStringList[1], studentAStringList[0], new Date(studentAStringList[2])));
+            Student studentB = new Student(
+                new Profile(studentBStringList[1], studentBStringList[0], new Date(studentBStringList[2])));
+            System.out.println(testStringStudent[i][0] + " compareTo " + testStringStudent[i][1] + ": "
+                    + studentA.compareTo(studentB));
+        }
     }
 }
 

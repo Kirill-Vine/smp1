@@ -54,7 +54,7 @@ public enum Major {
                 output = Major.BAIT;
                 break;
             default:
-                System.out.println("Major does not exist");
+                System.out.println(input.toUpperCase() + " is not a major");
                 output = null;
         }
         return output;
